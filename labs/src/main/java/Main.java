@@ -5,6 +5,6 @@ public class Main {
         int[] array = new int[10];
 
         Reflection reflection = new Reflection();
-        reflection.print(array);
+        reflection.doReflection(array);
     }
 }
