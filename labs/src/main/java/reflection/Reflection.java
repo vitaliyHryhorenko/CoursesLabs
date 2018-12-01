@@ -1,5 +1,6 @@
 package reflection;
 
+import analyzer.Analyzer;
 import fillers.AnnotationFiller;
 import fillers.Filler;
 import org.reflections.Reflections;
@@ -20,6 +21,7 @@ import java.util.Set;
 
 public class Reflection {
 
+
     public List<Method> getAnnotation() {
 
         Filler filler = new Filler();
@@ -37,6 +39,14 @@ public class Reflection {
         return fillerMethodList;
     }
 
+    public  void doFiller(Method method, int[] array) {
+        try {
+            method.invoke(new Filler(), array);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+    }
+
     //get sub types AbstractSorter class
     public List<Class> getSubTypes() {
         List<Class> classList = new ArrayList<>();
@@ -45,60 +55,35 @@ public class Reflection {
         Set<Class<? extends AbstractSorter>> subTypes = reflections.getSubTypesOf(AbstractSorter.class);
 
         for (Class c:subTypes) {
-            classList.add(c);
-        }
-        return classList;
-    }
-
-    //get all method "sort" in sub types AbstractSorter class
-    public void getHeirClass(int[] array) {
-        List<Method> sorterMethodList = new ArrayList<>();
-
-        List<Class> subTypes = getSubTypes();
-        for (Class c:subTypes) {
             Class clazz = null;
             try {
                 clazz = Class.forName(c.getName());
                 if(!(Modifier.isAbstract(c.getModifiers()))) {
-//                    sorterMethodList.add(clazz.getMethod("sort", int[].class));
-                    Method method = clazz.getMethod("sort", int[].class);
-
-                    try {
-                        Object obj = clazz.newInstance();
-                        method.invoke(obj, array);
-
-                    } catch (IllegalAccessException | InvocationTargetException | InstantiationException e) {
-                        e.printStackTrace();
-                    }
+                    classList.add(c);
                 }
-            } catch (ClassNotFoundException | NoSuchMethodException | SecurityException e) {
+            } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
         }
+        return classList;
     }
 
-    public void doReflection(int[] array) {
-        List<Method> fillerMethodList = getAnnotation();
-//        List<Method> sorterMethodList = getHeirClass(array);
-
-//        List<Class> subTypes = getSubTypes();
-
-//        Class clazz = AbstractSorter.class;
-//        Set<Class<? extends AbstractSorter>> subTypes =
-
-        for (Method m1:fillerMethodList) {
+    //do sorting and analysis
+    public void doSort(Class c, int[] array) {
+        Analyzer analyzer = new Analyzer();
+        Class clazz = null;
+        try {
+            clazz = Class.forName(c.getName());
             try {
-                m1.invoke(new Filler(), array);
-                getHeirClass(array);
-                for (int i:array) {
-                    System.out.print(i + " ");
-                }
-                System.out.println();
-            } catch (IllegalAccessException | InvocationTargetException e) {
+                analyzer.analyzeSort(array, (AbstractSorter) clazz.newInstance());
+            } catch (InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
             }
+        } catch (ClassNotFoundException | SecurityException e) {
+            e.printStackTrace();
         }
-
-
     }
+
+
+
 }
