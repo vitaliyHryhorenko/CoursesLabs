@@ -1,17 +1,15 @@
 package output;
 
 import reflection.Reflection;
+import sorters.MergeSort;
 
 import java.lang.reflect.Method;
 import java.util.List;
 
 public class Output {
 
-    public void doPrint(int[] array) {
-        for (int i:array) {
-            System.out.print(i + " ");
-        }
-        System.out.println();
+    public void doPrint(String methodName, String className, int timeSort) {
+        System.out.println(methodName + " + " + className + " = " + timeSort);
     }
 
     public void print(int[] array) {
@@ -20,19 +18,13 @@ public class Output {
         List<Class> classList = reflection.getSubTypes();
         List<Method> fillerMethodList = reflection.getAnnotation();
 
-
         for (Method method:fillerMethodList) {
+
             for (Class c : classList) {
                 reflection.doFiller(method, array);
-
-                doPrint(array);
-
-                reflection.doSort(c, array);
-
-                doPrint(array);
-
-                System.out.println();
+                doPrint(method.getName(), c.getSimpleName(), reflection.doSort(c, array));
             }
+            System.out.println();
         }
 
 

@@ -1,6 +1,7 @@
 package sorters;
 
-public class DownBubbleSorter extends BubbleSorter{
+public class ReverseBubbleSort extends BubbleSorter{
+    @Override
     public void sort(int[] array) {
         int temp;
         for (int i = array.length - 1; i > 0; i--) {

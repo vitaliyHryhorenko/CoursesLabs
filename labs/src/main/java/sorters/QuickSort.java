@@ -1,6 +1,7 @@
 package sorters;
 
 public class QuickSort extends AbstractSorter {
+    @Override
     public void sort(int[] array) {
         int start = 0;
         int end = array.length - 1;

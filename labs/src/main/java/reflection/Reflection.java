@@ -55,33 +55,28 @@ public class Reflection {
         Set<Class<? extends AbstractSorter>> subTypes = reflections.getSubTypesOf(AbstractSorter.class);
 
         for (Class c:subTypes) {
-            Class clazz = null;
-            try {
-                clazz = Class.forName(c.getName());
-                if(!(Modifier.isAbstract(c.getModifiers()))) {
-                    classList.add(c);
-                }
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+            if(!(Modifier.isAbstract(c.getModifiers()))) {
+                classList.add(c);
             }
         }
         return classList;
     }
 
     //do sorting and analysis
-    public void doSort(Class c, int[] array) {
+    public int doSort(Class c, int[] array) {
         Analyzer analyzer = new Analyzer();
         Class clazz = null;
         try {
             clazz = Class.forName(c.getName());
             try {
-                analyzer.analyzeSort(array, (AbstractSorter) clazz.newInstance());
+                return analyzer.analyzeSort(array, (AbstractSorter) clazz.newInstance());
             } catch (InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
             }
         } catch (ClassNotFoundException | SecurityException e) {
             e.printStackTrace();
         }
+        return 0;
     }
 
 
