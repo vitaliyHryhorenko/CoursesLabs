@@ -1,7 +1,6 @@
 package output;
 
 import reflection.Reflection;
-import sorters.MergeSort;
 
 import java.lang.reflect.Method;
 import java.util.List;

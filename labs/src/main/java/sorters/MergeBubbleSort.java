@@ -1,21 +1,9 @@
 package sorters;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class MergeBubbleSort extends BubbleSort {
-
+public class MergeBubbleSort extends AbstractSorter {
+    @Override
     public void sort(int[] array) {
-        MergeSort mergeSort = new MergeSort();
-
-        List<int[]>arrayList = mergeSort.divArray(array);
-
-        int[] array1 = arrayList.get(0);
-        int[] array2 = arrayList.get(1);
-
-        super.sort(array1);
-        super.sort(array2);
-
-        mergeSort.mergeArray(array, array1, array2);
+        AbstractSorter abstractSorter = new BubbleSort();
+        new MergeSort().divArray(array, abstractSorter);
     }
 }

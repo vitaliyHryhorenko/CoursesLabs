@@ -1,12 +1,8 @@
 package sorters;
 
-import java.util.ArrayList;
-import java.util.List;
+public class MergeSort {
 
-public class MergeSort{
-
-    public List<int[]> divArray(int[] array) {
-        List<int[]> arrayList = new ArrayList<>();
+    public void divArray(int[] array, AbstractSorter abstractSorter) {
 
         int[] array1 = new int[array.length/2];
         int[] array2 = new int[array.length-array1.length];
@@ -18,11 +14,10 @@ public class MergeSort{
             array2[i] = array[j];
         }
 
-        arrayList.add(array1);
-        arrayList.add(array2);
+        new Thread(new DoThreads(array1, abstractSorter)).start();
+        new Thread(new DoThreads(array2, abstractSorter)).start();
 
-        return arrayList;
-
+        mergeArray(array, array1, array2);
     }
 
     public void mergeArray(int[] array, int[] array1, int[] array2) {
