@@ -1,26 +1,65 @@
 package sorters;
 
+import thread.SorterThread;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class MergeSort {
 
     public void divArray(int[] array, AbstractSorter abstractSorter) {
 
-        int[] array1 = new int[array.length/2];
-        int[] array2 = new int[array.length-array1.length];
+        List<int[]> arrayList = new ArrayList<>();
 
-        for (int i = 0; i < array1.length; i++) {
-            array1[i] = array[i];
+        int countProc = Runtime.getRuntime().availableProcessors();
+        doDivArray(array, countProc, arrayList);
+
+        List<Thread> threads = new ArrayList<>();
+
+        for (int[] i : arrayList) {
+            Thread thread = new Thread(new SorterThread(i, abstractSorter));
+            thread.start();
+            threads.add(thread);
         }
-        for (int i = 0, j = array1.length; i < array2.length; i++, j++) {
-            array2[i] = array[j];
+
+        for (Thread thread : threads) {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
-        new Thread(new DoThreads(array1, abstractSorter)).start();
-        new Thread(new DoThreads(array2, abstractSorter)).start();
+        while (arrayList.size() != 1) {
+            mergeArray(arrayList, arrayList.get(0), arrayList.get(1));
+        }
 
-        mergeArray(array, array1, array2);
+        for (int i = 0; i < array.length; i++) {
+            array[i] = arrayList.get(0)[i];
+        }
+
     }
 
-    public void mergeArray(int[] array, int[] array1, int[] array2) {
+    public void doDivArray(int[] array, int countProc, List<int[]> arrayList) {
+
+        int first = 0;
+        int last = array.length / countProc;
+
+        for (int i = 0; i < countProc - 1; i++) {
+            arrayList.add(Arrays.copyOfRange(array, first, last));
+
+            first += array.length / countProc;
+            last += array.length / countProc;
+        }
+
+        arrayList.add(Arrays.copyOfRange(array, first, array.length));
+    }
+
+    public void mergeArray(List<int[]> arrayList, int[] array1, int[] array2) {
+
+        int[] array = new int[array1.length + array2.length];
+
         for (int i = 0, k = 0, j = 0; i < array.length; i++) {
 
             if (k < array2.length && j < array1.length) {
@@ -31,7 +70,7 @@ public class MergeSort {
                     array[i] = array2[k];
                     k++;
                 }
-            } else if (j == array1.length){
+            } else if (j == array1.length) {
                 array[i] = array2[k];
                 k++;
             } else {
@@ -39,5 +78,8 @@ public class MergeSort {
                 j++;
             }
         }
+        arrayList.add(array);
+        arrayList.remove(array1);
+        arrayList.remove(array2);
     }
 }
