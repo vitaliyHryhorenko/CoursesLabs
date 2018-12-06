@@ -8,12 +8,12 @@ import java.util.List;
 
 public class MergeSort {
 
-    public void divArray(int[] array, AbstractSorter abstractSorter) {
+    public void divAndMerge(int[] array, AbstractSorter abstractSorter) {
 
         List<int[]> arrayList = new ArrayList<>();
 
         int countProc = Runtime.getRuntime().availableProcessors();
-        doDivArray(array, countProc, arrayList);
+        divArray(array, countProc, arrayList);
 
         List<Thread> threads = new ArrayList<>();
 
@@ -41,7 +41,7 @@ public class MergeSort {
 
     }
 
-    public void doDivArray(int[] array, int countProc, List<int[]> arrayList) {
+    public void divArray(int[] array, int countProc, List<int[]> arrayList) {
 
         int first = 0;
         int last = array.length / countProc;

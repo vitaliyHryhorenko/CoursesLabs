@@ -5,6 +5,6 @@ public class MergeReverseBubbleSort extends AbstractSorter {
     public void sort(int[] array) {
         AbstractSorter abstractSorter = new ReverseBubbleSort();
         MergeSort mergeSort = new MergeSort();
-        mergeSort.divArray(array, abstractSorter);
+        mergeSort.divAndMerge(array, abstractSorter);
     }
 }

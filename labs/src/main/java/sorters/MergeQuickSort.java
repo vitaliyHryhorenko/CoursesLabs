@@ -5,7 +5,7 @@ public class MergeQuickSort extends AbstractSorter {
     public void sort(int[] array) {
         AbstractSorter abstractSorter = new QuickSort();
         MergeSort mergeSort = new MergeSort();
-        mergeSort.divArray(array, abstractSorter);
+        mergeSort.divAndMerge(array, abstractSorter);
 
     }
 }

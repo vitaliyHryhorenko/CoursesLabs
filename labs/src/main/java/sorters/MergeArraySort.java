@@ -5,6 +5,6 @@ public class MergeArraySort extends AbstractSorter {
     public void sort(int[] array) {
         AbstractSorter abstractSorter = new ArraySort();
         MergeSort mergeSort = new MergeSort();
-        mergeSort.divArray(array, abstractSorter);
+        mergeSort.divAndMerge(array, abstractSorter);
     }
 }

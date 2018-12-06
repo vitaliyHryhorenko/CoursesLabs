@@ -9,11 +9,6 @@ public class Output {
 
     public void doPrint(int[] array, String methodName, String className, int timeSort) {
         System.out.println(methodName + " + " + className + " = " + timeSort);
-        for (int i:array) {
-            System.out.print(i + " ");
-        }
-        System.out.println();
-        System.out.println();
     }
 
     public void print(int[] array) {
@@ -26,12 +21,7 @@ public class Output {
 
             for (Class c : classList) {
                 reflection.doFiller(method, array);
-                for (int i:array) {
-                    System.out.print(i + " ");
-                }
-                System.out.println();
-                int timeSort = reflection.doSort(c, array);
-                doPrint(array, method.getName(), c.getSimpleName(), timeSort);
+                doPrint(array, method.getName(), c.getSimpleName(),reflection.doSort(c, array) );
             }
             System.out.println();
         }
