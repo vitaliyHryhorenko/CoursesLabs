@@ -6,7 +6,7 @@ import java.io.File;
 
 public class Main {
     public static void main(String[] args) {
-        new OutputExcel().writeIntoExcel("D:\\study\\CoursesLabs\\output.xls", 5);
+        new OutputExcel().writeIntoExcel("D:\\study\\CoursesLabs\\output.xlsx", 10);
 
     }
 }
