@@ -2,6 +2,7 @@ package sorters;
 
 public class ReverseBubbleSort extends BubbleSorter{
     @Override
+    @AnnotationSorter(name = "Reverse Bubble Sort")
     public void sort(int[] array) {
         int temp;
         for (int i = array.length - 1; i > 0; i--) {

@@ -1,9 +1,12 @@
+import excel.OutputExcel;
 import output.Output;
 import reflection.Reflection;
 
+import java.io.File;
+
 public class Main {
     public static void main(String[] args) {
-        int[] array = new int[40];
-        new Output().print(array);
+        new OutputExcel().writeIntoExcel("D:\\study\\CoursesLabs\\output.xls", 5);
+
     }
 }

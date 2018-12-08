@@ -41,7 +41,7 @@ public class MergeSort {
 
     }
 
-    public void divArray(int[] array, int countProc, List<int[]> arrayList) {
+    protected void divArray(int[] array, int countProc, List<int[]> arrayList) {
 
         int first = 0;
         int last = array.length / countProc;
@@ -56,7 +56,7 @@ public class MergeSort {
         arrayList.add(Arrays.copyOfRange(array, first, array.length));
     }
 
-    public void mergeArray(List<int[]> arrayList, int[] array1, int[] array2) {
+    protected void mergeArray(List<int[]> arrayList, int[] array1, int[] array2) {
 
         int[] array = new int[array1.length + array2.length];
 
